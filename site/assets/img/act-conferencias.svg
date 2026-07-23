@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 480" role="img" aria-label="Conferencias magistrales">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#2b3566"/>
+      <stop offset=".55" stop-color="#1d2549"/>
+      <stop offset="1" stop-color="#0a0f22"/>
+    </linearGradient>
+    <radialGradient id="glow" cx=".74" cy=".18" r=".6">
+      <stop offset="0" stop-color="#e8b447" stop-opacity=".38"/>
+      <stop offset=".62" stop-color="#e8b447" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="gold" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#f6cf6b"/>
+      <stop offset="1" stop-color="#c58e28"/>
+    </linearGradient>
+    <pattern id="dots" width="34" height="34" patternUnits="userSpaceOnUse">
+      <circle cx="2" cy="2" r="1.4" fill="#e8b447" opacity=".10"/>
+    </pattern>
+  </defs>
+  <rect width="800" height="480" fill="url(#bg)"/>
+  <rect width="800" height="480" fill="url(#dots)"/>
+  <rect width="800" height="480" fill="url(#glow)"/>
+  <g fill="none" stroke="url(#gold)" stroke-width="7" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="366" y="150" width="68" height="118" rx="34"/>
+    <path d="M336 248a64 64 0 0 0 128 0"/>
+    <path d="M400 312v48"/>
+    <path d="M358 360h84"/>
+    <path d="M300 202a150 150 0 0 0 0 116" opacity=".75"/>
+    <path d="M500 202a150 150 0 0 1 0 116" opacity=".75"/>
+    <path d="M266 176a204 204 0 0 0 0 168" opacity=".4"/>
+    <path d="M534 176a204 204 0 0 1 0 168" opacity=".4"/>
+  </g>
+</svg>

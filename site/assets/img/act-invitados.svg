@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 480" role="img" aria-label="Invitados internacionales">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#2b3566"/>
+      <stop offset=".55" stop-color="#1d2549"/>
+      <stop offset="1" stop-color="#0a0f22"/>
+    </linearGradient>
+    <radialGradient id="glow" cx=".26" cy=".2" r=".62">
+      <stop offset="0" stop-color="#e8b447" stop-opacity=".38"/>
+      <stop offset=".62" stop-color="#e8b447" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="gold" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#f6cf6b"/>
+      <stop offset="1" stop-color="#c58e28"/>
+    </linearGradient>
+    <pattern id="dots" width="34" height="34" patternUnits="userSpaceOnUse">
+      <circle cx="2" cy="2" r="1.4" fill="#e8b447" opacity=".10"/>
+    </pattern>
+  </defs>
+  <rect width="800" height="480" fill="url(#bg)"/>
+  <rect width="800" height="480" fill="url(#dots)"/>
+  <rect width="800" height="480" fill="url(#glow)"/>
+  <g fill="none" stroke="url(#gold)" stroke-width="7" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="400" cy="240" r="118"/>
+    <ellipse cx="400" cy="240" rx="46" ry="118"/>
+    <path d="M282 240H518"/>
+    <path d="M306 184H494" opacity=".8"/>
+    <path d="M306 296H494" opacity=".8"/>
+  </g>
+  <g fill="url(#gold)">
+    <circle cx="356" cy="196" r="9"/>
+    <circle cx="452" cy="268" r="9"/>
+    <circle cx="404" cy="322" r="9"/>
+  </g>
+</svg>

@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>I Congreso Internacional de Derecho Procesal Contemporáneo</title>
+<meta name="description" content="I Congreso Internacional de Derecho Procesal Contemporáneo · 25 y 26 de septiembre de 2026 · Centro de Convenciones ATLAPA, Ciudad de Panamá. Juristas, magistrados e investigadores de 6 países." />
+<meta property="og:title" content="I Congreso Internacional de Derecho Procesal Contemporáneo" />
+<meta property="og:description" content="25 y 26 de septiembre de 2026 · Centro de Convenciones ATLAPA, Panamá." />
+<meta property="og:type" content="website" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="styles.css?v=9" />
+</head>
+<body>
+<canvas id="bg-fx" aria-hidden="true"></canvas>
+<div class="scroll-progress" id="scrollProgress" aria-hidden="true"></div>
+
+<!-- ===== HEADER / NAV ===== -->
+<header class="site-header" id="header">
+  <div class="nav-inner">
+    <a href="#inicio" class="brand" aria-label="Inicio">
+      <span class="brand-mark">I</span>
+      <span class="brand-text">Congreso Internacional<br><small>Derecho Procesal Contemporáneo</small></span>
+    </a>
+    <nav class="nav-links" id="navLinks" aria-label="Navegación principal">
+      <a href="#acerca">Acerca</a>
+      <a href="#conferencistas">Conferencistas</a>
+      <a href="#agenda">Agenda</a>
+      <a href="#dirigido">Dirigido a</a>
+      <a href="#inscripcion">Inscripción</a>
+      <a href="#sede">Sede</a>
+      <a href="#aliados">Aliados</a>
+      <a href="#contacto">Contacto</a>
+      <a href="#inscripcion" class="btn btn-gold nav-cta">Inscríbete</a>
+    </nav>
+    <button class="nav-toggle" id="navToggle" aria-label="Abrir menú" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<!-- ===== HERO ===== -->
+<section class="hero" id="inicio">
+  <canvas class="hero-canvas" id="heroCanvas" aria-hidden="true"></canvas>
+  <div class="hero-glow" aria-hidden="true"></div>
+  <div class="hero-content">
+    <div class="hero-badge reveal">Panamá · América Latina</div>
+    <img src="assets/img/hero-lockup.png" alt="I Congreso Internacional de Derecho Procesal Contemporáneo" class="hero-lockup reveal" />
+    <h1 class="sr-only">I Congreso Internacional de Derecho Procesal Contemporáneo</h1>
+    <p class="hero-sub reveal">Dos jornadas de conferencias con juristas, magistrados e investigadores de seis países sobre los debates que hoy atraviesan el derecho procesal.</p>
+    <div class="hero-meta reveal">
+      <span class="meta-chip"><svg viewBox="0 0 24 24"><path d="M7 2v2M17 2v2M3 8h18M5 4h14a2 2 0 0 1 2 2v13a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z"/></svg>25 y 26 de septiembre, 2026</span>
+      <span class="meta-chip"><svg viewBox="0 0 24 24"><path d="M12 21s-7-6.2-7-11a7 7 0 0 1 14 0c0 4.8-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>Centro de Convenciones ATLAPA · Panamá</span>
+    </div>
+    <div class="hero-actions reveal">
+      <a href="#inscripcion" class="btn btn-gold">Reserva tu cupo</a>
+      <a href="#agenda" class="btn btn-ghost">Ver la agenda</a>
+    </div>
+
+    <div class="countdown reveal" id="countdown" aria-label="Cuenta regresiva">
+      <div class="cd-item"><span class="cd-num" data-cd="days">00</span><span class="cd-lbl">Días</span></div>
+      <div class="cd-item"><span class="cd-num" data-cd="hours">00</span><span class="cd-lbl">Horas</span></div>
+      <div class="cd-item"><span class="cd-num" data-cd="mins">00</span><span class="cd-lbl">Min</span></div>
+      <div class="cd-item"><span class="cd-num" data-cd="secs">00</span><span class="cd-lbl">Seg</span></div>
+    </div>
+  </div>
+
+  <div class="hero-sponsors reveal">
+    <span class="hs-label">Organizan y patrocinan</span>
+    <div class="hs-logos">
+      <span class="hs-chip"><img src="assets/img/logo-mercosur.png" alt="Cámara de Comercio Panamá–Mercosur" /></span>
+      <span class="hs-chip"><img src="assets/img/logo-mmh.png" alt="María Morales, Henao Abogados & Asociados" class="on-dark" /></span>
+      <span class="hs-chip"><img src="assets/img/logo-atlapa.png" alt="Centro de Convenciones ATLAPA" /></span>
+      <span class="hs-chip"><img src="assets/img/logo-isi.png" alt="Instituto Superior de Ingeniería" /></span>
+    </div>
+  </div>
+  <a href="#acerca" class="scroll-cue" aria-label="Desplázate"><span></span></a>
+</section>
+
+<!-- ===== STATS ===== -->
+<section class="stats" aria-label="Cifras del congreso">
+  <div class="stat reveal"><span class="stat-num" data-count="12">0</span><span class="stat-lbl">Conferencistas</span></div>
+  <div class="stat reveal"><span class="stat-num" data-count="6">0</span><span class="stat-lbl">Países</span></div>
+  <div class="stat reveal"><span class="stat-num" data-count="2">0</span><span class="stat-lbl">Días de congreso</span></div>
+  <div class="stat reveal"><span class="stat-num" data-count="300">0</span><span class="stat-lbl">Cupos presenciales</span></div>
+</section>
+
+<!-- ===== ACERCA ===== -->
+<section class="section" id="acerca">
+  <div class="container about-grid">
+    <div class="about-text reveal-left">
+      <span class="eyebrow">Acerca del Congreso</span>
+      <h2 class="h2">¿Qué es el I Congreso Internacional de Derecho Procesal Contemporáneo?</h2>
+      <p>Es un encuentro académico que reúne a juristas, magistrados, docentes e investigadores de seis países para discutir cómo está cambiando el derecho procesal: la prueba, las medidas cautelares, los procesos colectivos y la cooperación entre jurisdicciones.</p>
+      <p>Durante dos días cada ponente presenta un tema y lo contrasta con la práctica de otros ordenamientos, de modo que quien asiste se lleve criterios aplicables a su propio trabajo en la administración de justicia.</p>
+      <a href="#conferencistas" class="link-arrow">Conoce a los conferencistas <span>→</span></a>
+    </div>
+    <div class="about-media reveal-right">
+      <img src="assets/img/photo-speaker.jpg" alt="Conferencia magistral" data-parallax="0.12" />
+      <div class="about-media-card">
+        <strong>ExpoMarket Mercosur Global 2026</strong>
+        <span>Marco internacional del Congreso</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== CONFERENCISTAS ===== -->
+<section class="section section-dark" id="conferencistas">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="eyebrow">Conferencistas</span>
+      <h2 class="h2">Doce ponentes, seis países</h2>
+      <p class="section-lead">Juristas de Panamá, Perú, España, Uruguay, México y Colombia. Filtra el listado por jornada.</p>
+    </div>
+    <div class="filter-tabs reveal" id="spkFilter">
+      <button class="chip active" data-day="all">Todos</button>
+      <button class="chip" data-day="1">Día 1 · 25 sep</button>
+      <button class="chip" data-day="2">Día 2 · 26 sep</button>
+    </div>
+    <div class="speakers-grid" id="speakersGrid"><!-- JS-injected --></div>
+  </div>
+</section>
+
+<!-- ===== AGENDA ===== -->
+<section class="section" id="agenda">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="eyebrow">Agenda Académica</span>
+      <h2 class="h2">Dos días de conferencias magistrales</h2>
+    </div>
+    <div class="agenda-tabs reveal">
+      <button class="agenda-tab active" data-agenda="1">
+        <strong>Día 1</strong><span>25 de septiembre, 2026</span>
+      </button>
+      <button class="agenda-tab" data-agenda="2">
+        <strong>Día 2</strong><span>26 de septiembre, 2026</span>
+      </button>
+    </div>
+    <div class="agenda-panel" data-panel="1"><ol class="timeline" id="agenda1"></ol></div>
+    <div class="agenda-panel hidden" data-panel="2"><ol class="timeline" id="agenda2"></ol></div>
+  </div>
+</section>
+
+<!-- ===== DIRIGIDO A ===== -->
+<section class="section section-dark" id="dirigido">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="eyebrow">Dirigido a</span>
+      <h2 class="h2">A quién está dirigido</h2>
+    </div>
+    <div class="audience-grid" id="audienceGrid"></div>
+  </div>
+</section>
+
+<!-- ===== INSCRIPCIÓN / PRECIOS ===== -->
+<section class="section" id="inscripcion">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="eyebrow">Inscripción</span>
+      <h2 class="h2">Elige tu modalidad de participación</h2>
+      <p class="section-lead">Modalidad presencial limitada a 300 asistentes. Acceso virtual disponible para participantes nacionales e internacionales.</p>
+    </div>
+
+    <div class="pricing">
+      <div class="price-col reveal">
+        <div class="price-col-head"><span class="pc-tag">Presencial</span><h3>En el Centro de Convenciones ATLAPA</h3></div>
+        <div class="price-cards">
+          <div class="price-card">
+            <span class="pc-aud">Público general</span>
+            <span class="pc-amount">$300<small>USD</small></span>
+            <a href="#pago" class="btn btn-gold btn-sm">Inscribirme</a>
+          </div>
+          <div class="price-card">
+            <span class="pc-aud">Estudiantes de pregrado</span>
+            <span class="pc-amount">$150<small>USD</small></span>
+            <a href="#pago" class="btn btn-outline btn-sm">Inscribirme</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="price-col reveal">
+        <div class="price-col-head"><span class="pc-tag pc-tag-alt">Virtual</span><h3>Transmisión en vivo desde cualquier país</h3></div>
+        <div class="price-cards">
+          <div class="price-card">
+            <span class="pc-aud">Público general</span>
+            <span class="pc-amount">$130<small>USD</small></span>
+            <a href="#pago" class="btn btn-gold btn-sm">Inscribirme</a>
+          </div>
+          <div class="price-card">
+            <span class="pc-aud">Estudiantes de pregrado</span>
+            <span class="pc-amount">$30<small>USD</small></span>
+            <a href="#pago" class="btn btn-outline btn-sm">Inscribirme</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="notice reveal">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg>
+      <p><strong>Descuento para grupos:</strong> los grupos de cinco (5) o más personas podrán acceder a un descuento especial del <strong>10 %</strong> sobre el valor total de la inscripción, siempre que el pago se realice antes del <strong>25 de julio de 2026</strong>.</p>
+    </div>
+
+    <div class="enroll-grid" id="pago">
+      <div class="enroll-card reveal">
+        <h3><span class="enroll-num">01</span> Confirma tu registro</h3>
+        <p>Tu inscripción quedará confirmada únicamente cuando se cumplan ambos requisitos:</p>
+        <ul class="checks">
+          <li>Remitir el comprobante de pago.</li>
+          <li>Completar correctamente el formulario de inscripción.</li>
+        </ul>
+        <p>Una vez verificada la información, recibirás la confirmación de tu registro en el correo electrónico indicado.</p>
+        <p class="enroll-foot warn">Verifica cuidadosamente los datos ingresados: el nombre registrado será el que aparecerá en tu certificado de asistencia y en tu escarapela oficial del evento.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== BENEFICIOS ===== -->
+<section class="section section-dark" id="beneficios">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="eyebrow">Beneficios</span>
+      <h2 class="h2">¿Por qué asistir?</h2>
+    </div>
+    <div class="benefits-top" id="whyGrid"></div>
+    <div class="perks reveal">
+      <span class="perks-title">Todo participante recibe</span>
+      <div class="perks-items" id="perksGrid"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== ACTIVIDADES DESTACADAS ===== -->
+<section class="section" id="actividades">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="eyebrow">Actividades destacadas</span>
+      <h2 class="h2">Además de las conferencias</h2>
+    </div>
+    <div class="activities" id="activitiesGrid"></div>
+  </div>
+</section>
+
+<!-- ===== SEDE ===== -->
+<section class="section section-dark" id="sede">
+  <div class="container venue-grid">
+    <div class="venue-text reveal-left">
+      <span class="eyebrow">Sede</span>
+      <h2 class="h2">Centro de Convenciones ATLAPA</h2>
+      <p>El Congreso se realiza en el Centro de Convenciones ATLAPA, en la Ciudad de Panamá, uno de los recintos de referencia del país para congresos y encuentros internacionales.</p>
+      <p>Cuenta con salas equipadas y amplios accesos, junto al Hotel Sheraton Grand Panamá, en la zona de convenciones de la ciudad.</p>
+      <a class="link-arrow" href="https://www.google.com/maps/search/ATLAPA+Convention+Center+Panama" target="_blank" rel="noopener">Ver ubicación en el mapa <span>→</span></a>
+    </div>
+    <div class="venue-media reveal-right">
+      <span class="venue-badge">Ciudad de Panamá</span>
+      <img src="assets/img/venue-atlapa-1.jpg" alt="Centro de Convenciones ATLAPA" data-parallax="0.1" />
+      <div class="map-wrap">
+        <iframe class="venue-map" title="Mapa ATLAPA" loading="lazy" src="https://www.google.com/maps?q=ATLAPA+Convention+Center+Panama&output=embed"></iframe>
+        <span class="map-scan" aria-hidden="true"></span>
+        <span class="map-ping" aria-hidden="true"><span class="ring"></span><span class="ring r2"></span><span class="dot"></span></span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== EXPOMARKET ===== -->
+<section class="section" id="expomarket">
+  <div class="container expo-band reveal-zoom">
+    <span class="band-shine" aria-hidden="true"></span>
+    <div class="expo-text">
+      <span class="eyebrow">ExpoMarket Mercosur Global 2026</span>
+      <h2 class="h2">El marco del Congreso</h2>
+      <p>ExpoMarket Mercosur Global 2026 es un encuentro que reúne a empresarios, académicos y profesionales de distintos sectores en torno al comercio y la cooperación entre Panamá y los países del MERCOSUR.</p>
+      <p>El I Congreso Internacional de Derecho Procesal Contemporáneo forma parte de su programa y aporta la dimensión jurídica del evento.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== ALIADOS / ORGANIZADORES ===== -->
+<section class="section section-dark" id="aliados">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="eyebrow">Organizadores, aliados y patrocinadores</span>
+      <h2 class="h2">Quiénes lo organizan</h2>
+      <p class="section-lead">Organizado por MERCOSUR Global Panamá y la firma María Morales, Henao Abogados &amp; Asociados, en alianza con el Hotel Sheraton Grand Panamá.</p>
+    </div>
+    <div class="allies" id="alliesGrid"></div>
+  </div>
+</section>
+
+<!-- ===== CONTACTO / FOOTER ===== -->
+<footer class="footer" id="contacto">
+  <div class="container footer-grid">
+    <div class="footer-brand reveal">
+      <img src="assets/img/hero-lockup.png" alt="I Congreso Internacional de Derecho Procesal Contemporáneo" />
+      <p>25 y 26 de septiembre de 2026 · Centro de Convenciones ATLAPA, Ciudad de Panamá.</p>
+    </div>
+    <div class="footer-contact reveal">
+      <span class="eyebrow">Contacto</span>
+      <p class="fc-name">María Angélica Ortiz</p>
+      <p class="fc-role">Coordinadora del I Congreso Internacional de Derecho Procesal</p>
+      <ul class="fc-list">
+        <li><a href="https://wa.me/573014303874" target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><path d="M6 2h4l2 5-3 2a12 12 0 0 0 6 6l2-3 5 2v4a2 2 0 0 1-2 2A18 18 0 0 1 4 6a2 2 0 0 1 2-4z"/></svg>(+57) 301 430 3874</a></li>
+        <li><a href="mailto:ciderechoprocesal@gmail.com"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>ciderechoprocesal@gmail.com</a></li>
+      </ul>
+    </div>
+    <div class="footer-social reveal">
+      <span class="eyebrow">¡Síguenos en nuestras redes!</span>
+      <a href="https://instagram.com/mhabogados.asociados" target="_blank" rel="noopener" class="social-link"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1.2" fill="currentColor" stroke="none"/></svg>mhabogados.asociados</a>
+      <a href="https://facebook.com/mhabogados.asociados" target="_blank" rel="noopener" class="social-link"><svg viewBox="0 0 24 24"><path d="M14 8h3V4h-3a4 4 0 0 0-4 4v2H7v4h3v6h4v-6h3l1-4h-4V8a1 1 0 0 1 1-1z"/></svg>mhabogados &amp; asociados</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2026 I Congreso Internacional de Derecho Procesal Contemporáneo · ExpoMarket Mercosur Global.</p>
+    <p>MERCOSUR Global Panamá · María Morales, Henao Abogados &amp; Asociados.</p>
+  </div>
+</footer>
+
+<button class="to-top" id="toTop" aria-label="Volver arriba">↑</button>
+
+<script src="script.js?v=4"></script>
+<script src="bg.js?v=4"></script>
+<script src="fx.js?v=2"></script>
+</body>
+</html>
