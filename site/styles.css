@@ -157,7 +157,7 @@ h1,h2,h3,.h2{font-family:"Libre Baskerville",Georgia,serif;font-weight:700;line-
 .section{padding:104px 0;position:relative}
 .section-dark{background:var(--navy);color:#fff}
 .section-dark .h2{color:#fff}
-.eyebrow{display:inline-block;font-size:.74rem;font-weight:700;letter-spacing:.24em;text-transform:uppercase;color:var(--gold-2);margin-bottom:14px}
+.eyebrow{display:inline-block;font-size:.74rem;font-weight:700;letter-spacing:.24em;text-transform:uppercase;color:var(--gold-2);margin-bottom:14px;white-space:nowrap}
 .section-dark .eyebrow{color:var(--gold-bright)}
 .h2{font-size:clamp(1.7rem,3.4vw,2.7rem);color:var(--navy);max-width:20ch}
 .section-head{max-width:720px;margin:0 auto 52px;text-align:center}

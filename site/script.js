@@ -162,7 +162,7 @@
         const tick = (t) => {
           const p = Math.min((t - t0) / dur, 1);
           const eased = 1 - Math.pow(1 - p, 3);
-          el.textContent = Math.round(target * eased) + (p === 1 && target >= 300 ? "+" : "");
+          el.textContent = Math.round(target * eased);
           if (p < 1) requestAnimationFrame(tick);
         };
         requestAnimationFrame(tick);
