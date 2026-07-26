@@ -6,6 +6,16 @@
   const $ = (s, c = document) => c.querySelector(s);
   const $$ = (s, c = document) => [...c.querySelectorAll(s)];
 
+  /* ---------- Supabase ---------- */
+  // Reemplaza estos dos valores por los de tu proyecto (Supabase → Project Settings → API).
+  const SUPABASE_URL = "https://jfmkrjxramxjyeiorxck.supabase.co";
+  const SUPABASE_ANON_KEY =
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImpmbWtyanhyYW14anllaW9yeGNrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQ5MzcyOTUsImV4cCI6MjEwMDUxMzI5NX0.r9z6zCFlh4941msiMrvnJWs33bmS75GCSa33wVcL1gk";
+  const supabaseClient =
+    window.supabase && SUPABASE_URL.startsWith("http")
+      ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
+      : null;
+
   /* ---------- Data ---------- */
   const SPEAKERS = [
     { n: "Dr. Abel Augusto Zamorano", c: "Panamá", f: "🇵🇦", img: "spk-zamorano.jpg", day: 1, t: "Conferencia inaugural" },
@@ -247,6 +257,14 @@
         $$(".agenda-panel").forEach(p => p.classList.toggle("hidden", p.dataset.panel !== d));
       });
     });
+    $$(".currency-tab").forEach(tab => {
+      tab.addEventListener("click", () => {
+        $$(".currency-tab").forEach(t => t.classList.remove("active"));
+        tab.classList.add("active");
+        const m = tab.dataset.moneda;
+        $$(".pricing[data-panel]").forEach(p => p.classList.toggle("hidden", p.dataset.panel !== m));
+      });
+    });
   }
 
   /* ---------- Smooth anchor with header offset ---------- */
@@ -377,6 +395,201 @@
     window.addEventListener("scroll", upd, { passive: true });
   }
 
+  // Tasa de cambio referencial USD → COP (fuente: Investing.com, 24 jul 2026). Actualizar periódicamente.
+  const USD_TO_COP = 3219.24;
+  const fmtCOP = (usd) =>
+    new Intl.NumberFormat("es-CO", { style: "currency", currency: "COP", maximumFractionDigits: 0 }).format(usd * USD_TO_COP);
+
+  /* ---------- Lightbox del QR de transferencia ---------- */
+  function initQrLightbox() {
+    const lightbox = $("#qrLightbox");
+    const zoomBtn = $("#qrZoomBtn");
+    const closeBtn = $("#qrLightboxClose");
+    if (!lightbox || !zoomBtn) return;
+
+    function open() {
+      lightbox.classList.add("open");
+      lightbox.setAttribute("aria-hidden", "false");
+    }
+    function close() {
+      lightbox.classList.remove("open");
+      lightbox.setAttribute("aria-hidden", "true");
+    }
+
+    zoomBtn.addEventListener("click", open);
+    closeBtn.addEventListener("click", close);
+    lightbox.addEventListener("click", (e) => {
+      if (e.target === lightbox) close();
+    });
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && lightbox.classList.contains("open")) close();
+    });
+  }
+
+  /* ---------- Modal de inscripción ---------- */
+  function initInscripcionModal() {
+    const overlay = $("#inscripcionModal");
+    if (!overlay) return;
+    const form = $("#inscripcionForm", overlay);
+    const successPanel = $("#modalSuccess", overlay);
+    const modalidadResumen = $("#modalModalidadResumen", overlay);
+    const fileInput = $("#comprobanteInput", overlay);
+    const fileName = $("#fileName", overlay);
+    const psTotal = $("#psTotal", overlay);
+    const successModalidad = $("#successModalidad", overlay);
+    const transferAmount = $("#transferAmount", overlay);
+    const transferAmountCop = $("#transferAmountCop", overlay);
+    const transferAmountCopRow = $("#transferAmountCopRow", overlay);
+    const copyKeyBtn = $("#copyKeyBtn", overlay);
+    const copyKeyMsg = $("#copyKeyMsg", overlay);
+    const transferKey = $("#transferKey", overlay);
+
+    let precioBase = 0;
+    let modalidadActual = "";
+    let categoriaActual = "";
+    let monedaActual = "USD";
+
+    const fmt = (n, moneda = monedaActual) =>
+      moneda === "COP"
+        ? `$${Math.round(n).toLocaleString("es-CO")} COP`
+        : `$${n.toFixed(2).replace(/\.00$/, "")} USD`;
+
+    function renderPrecio() {
+      psTotal.textContent = fmt(precioBase);
+      transferAmount.textContent = fmt(precioBase);
+      if (monedaActual === "COP") {
+        transferAmountCopRow.classList.add("hidden");
+      } else {
+        transferAmountCopRow.classList.remove("hidden");
+        transferAmountCop.textContent = fmtCOP(precioBase);
+      }
+    }
+
+    function resetForm() {
+      form.reset();
+      form.classList.remove("hidden");
+      successPanel.classList.add("hidden");
+      fileName.textContent = "";
+      renderPrecio();
+    }
+
+    function openModal(btn) {
+      modalidadActual = btn.dataset.modalidad;
+      categoriaActual = btn.dataset.categoria;
+      monedaActual = btn.dataset.moneda || "USD";
+      precioBase = parseFloat(btn.dataset.precio) || 0;
+      modalidadResumen.textContent = `${modalidadActual} · ${categoriaActual} · ${fmt(precioBase)}`;
+      resetForm();
+      overlay.classList.add("open");
+      overlay.setAttribute("aria-hidden", "false");
+      document.body.style.overflow = "hidden";
+    }
+
+    function closeModal() {
+      overlay.classList.remove("open");
+      overlay.setAttribute("aria-hidden", "true");
+      document.body.style.overflow = "";
+    }
+
+    $$(".js-inscribirme").forEach((btn) => {
+      btn.addEventListener("click", (e) => {
+        e.preventDefault();
+        openModal(btn);
+      });
+    });
+
+    $("#modalClose", overlay).addEventListener("click", closeModal);
+    $("#modalSuccessClose", overlay).addEventListener("click", closeModal);
+    overlay.addEventListener("click", (e) => {
+      if (e.target === overlay) closeModal();
+    });
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && overlay.classList.contains("open")) closeModal();
+    });
+
+    fileInput.addEventListener("change", () => {
+      fileName.textContent = fileInput.files[0] ? fileInput.files[0].name : "";
+    });
+
+    copyKeyBtn.addEventListener("click", async () => {
+      const key = transferKey.textContent.trim();
+      try {
+        await navigator.clipboard.writeText(key);
+      } catch {
+        const ta = document.createElement("textarea");
+        ta.value = key;
+        ta.style.position = "fixed";
+        ta.style.opacity = "0";
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand("copy");
+        document.body.removeChild(ta);
+      }
+      copyKeyMsg.textContent = "¡Llave copiada!";
+      clearTimeout(copyKeyBtn._t);
+      copyKeyBtn._t = setTimeout(() => { copyKeyMsg.textContent = ""; }, 2500);
+    });
+
+    const submitBtn = $("#submitBtn", overlay);
+    const submitMsg = $("#submitMsg", overlay);
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      if (!form.checkValidity()) {
+        form.reportValidity();
+        return;
+      }
+
+      if (!supabaseClient) {
+        submitMsg.textContent = "El formulario aún no está conectado a la base de datos. Contacta al equipo organizador.";
+        submitMsg.className = "submit-msg error";
+        return;
+      }
+
+      submitBtn.disabled = true;
+      submitBtn.textContent = "Enviando...";
+      submitMsg.textContent = "";
+      submitMsg.className = "submit-msg";
+
+      try {
+        const file = fileInput.files[0];
+        const ext = (file.name.split(".").pop() || "bin").toLowerCase();
+        const path = `${Date.now()}-${Math.random().toString(36).slice(2, 8)}.${ext}`;
+
+        const { error: uploadError } = await supabaseClient.storage
+          .from("comprobantes")
+          .upload(path, file);
+        if (uploadError) throw uploadError;
+
+        const { error: insertError } = await supabaseClient.from("inscripciones").insert({
+          nombre: form.nombre.value.trim(),
+          documento: form.documento.value.trim(),
+          email: form.email.value.trim(),
+          telefono: form.telefono.value.trim(),
+          pais: form.pais.value.trim(),
+          modalidad: modalidadActual,
+          categoria: categoriaActual,
+          moneda: monedaActual,
+          precio_base: precioBase,
+          total: precioBase,
+          comprobante_path: path,
+        });
+        if (insertError) throw insertError;
+
+        successModalidad.textContent = modalidadResumen.textContent;
+        form.classList.add("hidden");
+        successPanel.classList.remove("hidden");
+      } catch (err) {
+        console.error(err);
+        submitMsg.textContent = "Hubo un error al enviar tu inscripción. Intenta de nuevo o escríbenos por WhatsApp.";
+        submitMsg.className = "submit-msg error";
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = "Enviar inscripción";
+      }
+    });
+  }
+
   /* ---------- Init ---------- */
   document.addEventListener("DOMContentLoaded", () => {
     renderSpeakers();
@@ -394,5 +607,7 @@
     initHeroScroll();
     initImgParallax();
     initTimelineFill();
+    initInscripcionModal();
+    initQrLightbox();
   });
 })();

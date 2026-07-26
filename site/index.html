@@ -11,7 +11,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="styles.css?v=9" />
+<link rel="stylesheet" href="styles.css?v=14" />
 </head>
 <body>
 <canvas id="bg-fx" aria-hidden="true"></canvas>
@@ -164,19 +164,24 @@
       <p class="section-lead">Modalidad presencial limitada a 300 asistentes. Acceso virtual disponible para participantes nacionales e internacionales.</p>
     </div>
 
-    <div class="pricing">
+    <div class="currency-tabs" role="tablist" aria-label="Selecciona tu tipo de pago">
+      <button type="button" class="currency-tab active" data-moneda="USD">Pagos internacionales</button>
+      <button type="button" class="currency-tab" data-moneda="COP">Pagos realizados en Colombia</button>
+    </div>
+
+    <div class="pricing" data-panel="USD">
       <div class="price-col reveal">
         <div class="price-col-head"><span class="pc-tag">Presencial</span><h3>En el Centro de Convenciones ATLAPA</h3></div>
         <div class="price-cards">
           <div class="price-card">
-            <span class="pc-aud">Público general</span>
+            <span class="pc-aud">Profesional</span>
             <span class="pc-amount">$300<small>USD</small></span>
-            <a href="#pago" class="btn btn-gold btn-sm">Inscribirme</a>
+            <a href="#" class="btn btn-gold btn-sm js-inscribirme" data-modalidad="Presencial" data-categoria="Profesional" data-moneda="USD" data-precio="300">Inscribirme</a>
           </div>
           <div class="price-card">
-            <span class="pc-aud">Estudiantes de pregrado</span>
+            <span class="pc-aud">Estudiante</span>
             <span class="pc-amount">$150<small>USD</small></span>
-            <a href="#pago" class="btn btn-outline btn-sm">Inscribirme</a>
+            <a href="#" class="btn btn-outline btn-sm js-inscribirme" data-modalidad="Presencial" data-categoria="Estudiante" data-moneda="USD" data-precio="150">Inscribirme</a>
           </div>
         </div>
       </div>
@@ -185,14 +190,48 @@
         <div class="price-col-head"><span class="pc-tag pc-tag-alt">Virtual</span><h3>Transmisión en vivo desde cualquier país</h3></div>
         <div class="price-cards">
           <div class="price-card">
-            <span class="pc-aud">Público general</span>
+            <span class="pc-aud">Profesional</span>
             <span class="pc-amount">$130<small>USD</small></span>
-            <a href="#pago" class="btn btn-gold btn-sm">Inscribirme</a>
+            <a href="#" class="btn btn-gold btn-sm js-inscribirme" data-modalidad="Virtual" data-categoria="Profesional" data-moneda="USD" data-precio="130">Inscribirme</a>
           </div>
           <div class="price-card">
-            <span class="pc-aud">Estudiantes de pregrado</span>
-            <span class="pc-amount">$30<small>USD</small></span>
-            <a href="#pago" class="btn btn-outline btn-sm">Inscribirme</a>
+            <span class="pc-aud">Estudiante</span>
+            <span class="pc-amount">$50<small>USD</small></span>
+            <a href="#" class="btn btn-outline btn-sm js-inscribirme" data-modalidad="Virtual" data-categoria="Estudiante" data-moneda="USD" data-precio="50">Inscribirme</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="pricing hidden" data-panel="COP">
+      <div class="price-col">
+        <div class="price-col-head"><span class="pc-tag">Presencial</span><h3>En el Centro de Convenciones ATLAPA</h3></div>
+        <div class="price-cards">
+          <div class="price-card">
+            <span class="pc-aud">Profesional</span>
+            <span class="pc-amount">$1.020.000<small>COP</small></span>
+            <a href="#" class="btn btn-gold btn-sm js-inscribirme" data-modalidad="Presencial" data-categoria="Profesional" data-moneda="COP" data-precio="1020000">Inscribirme</a>
+          </div>
+          <div class="price-card">
+            <span class="pc-aud">Estudiante</span>
+            <span class="pc-amount">$510.000<small>COP</small></span>
+            <a href="#" class="btn btn-outline btn-sm js-inscribirme" data-modalidad="Presencial" data-categoria="Estudiante" data-moneda="COP" data-precio="510000">Inscribirme</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="price-col">
+        <div class="price-col-head"><span class="pc-tag pc-tag-alt">Virtual</span><h3>Transmisión en vivo desde cualquier país</h3></div>
+        <div class="price-cards">
+          <div class="price-card">
+            <span class="pc-aud">Profesional</span>
+            <span class="pc-amount">$440.000<small>COP</small></span>
+            <a href="#" class="btn btn-gold btn-sm js-inscribirme" data-modalidad="Virtual" data-categoria="Profesional" data-moneda="COP" data-precio="440000">Inscribirme</a>
+          </div>
+          <div class="price-card">
+            <span class="pc-aud">Estudiante</span>
+            <span class="pc-amount">$170.000<small>COP</small></span>
+            <a href="#" class="btn btn-outline btn-sm js-inscribirme" data-modalidad="Virtual" data-categoria="Estudiante" data-moneda="COP" data-precio="170000">Inscribirme</a>
           </div>
         </div>
       </div>
@@ -316,7 +355,98 @@
 
 <button class="to-top" id="toTop" aria-label="Volver arriba">↑</button>
 
-<script src="script.js?v=4"></script>
+<!-- ===== MODAL INSCRIPCIÓN ===== -->
+<div class="modal-overlay" id="inscripcionModal" aria-hidden="true">
+  <div class="modal-box" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <button type="button" class="modal-close" id="modalClose" aria-label="Cerrar formulario">&times;</button>
+    <div class="modal-scroll">
+
+      <div class="modal-head">
+        <span class="eyebrow">Formulario de inscripción</span>
+        <h3 id="modalTitle">Completa tus datos</h3>
+        <p class="modal-modalidad" id="modalModalidadResumen"></p>
+      </div>
+
+      <form id="inscripcionForm" novalidate>
+        <div class="form-grid">
+          <label class="field">
+            <span>Nombre completo *</span>
+            <input type="text" name="nombre" required autocomplete="name" />
+          </label>
+          <label class="field">
+            <span>Documento de identidad / Pasaporte *</span>
+            <input type="text" name="documento" required />
+          </label>
+          <label class="field">
+            <span>Correo electrónico *</span>
+            <input type="email" name="email" required autocomplete="email" />
+          </label>
+          <label class="field">
+            <span>Teléfono / WhatsApp *</span>
+            <input type="tel" name="telefono" required autocomplete="tel" />
+          </label>
+          <label class="field field-full">
+            <span>País *</span>
+            <input type="text" name="pais" required autocomplete="country-name" />
+          </label>
+        </div>
+
+        <div class="price-summary" id="priceSummary">
+          <div class="ps-row ps-total"><span>Total a pagar</span><span id="psTotal">$0 USD</span></div>
+        </div>
+
+        <div class="transfer-box">
+          <span class="transfer-step">Paso 1 · Realiza tu transferencia</span>
+          <div class="transfer-body">
+            <button type="button" class="transfer-qr-btn" id="qrZoomBtn" aria-label="Ampliar código QR para escanear">
+              <img src="assets/img/bancolombiaQR.jpeg" alt="Código QR Bre-B Bancolombia para transferencia" class="transfer-qr" />
+              <span class="transfer-qr-zoom" aria-hidden="true">⤢</span>
+            </button>
+            <div class="transfer-info">
+              <p class="transfer-amount">Transfiere <strong id="transferAmount">$0 USD</strong></p>
+              <p class="transfer-amount-cop" id="transferAmountCopRow">≈ <strong id="transferAmountCop">$0 COP</strong> <span class="transfer-rate-note">(tasa referencial)</span></p>
+              <p class="transfer-hint">Toca el QR para ampliarlo y escanéalo desde tu app bancaria (Bre-B), o usa la llave:</p>
+              <div class="transfer-key-row">
+                <code class="transfer-key" id="transferKey">@morales6773</code>
+                <button type="button" class="btn btn-outline btn-sm" id="copyKeyBtn">Copiar</button>
+              </div>
+              <span class="transfer-copy-msg" id="copyKeyMsg" aria-live="polite"></span>
+            </div>
+          </div>
+        </div>
+
+        <label class="field field-full">
+          <span>Paso 2 · Sube tu comprobante de transferencia *</span>
+          <input type="file" name="comprobante" id="comprobanteInput" accept="image/*,application/pdf" required />
+          <span class="field-hint">Formatos permitidos: JPG, PNG o PDF.</span>
+          <span class="file-name" id="fileName"></span>
+        </label>
+
+        <p class="modal-foot">Al enviar este formulario, tu inscripción quedará pendiente de verificación por el equipo organizador, quien confirmará tu cupo por correo electrónico.</p>
+
+        <button type="submit" class="btn btn-gold" id="submitBtn">Enviar inscripción</button>
+        <p class="submit-msg" id="submitMsg" aria-live="polite"></p>
+      </form>
+
+      <div class="modal-success hidden" id="modalSuccess">
+        <div class="success-icon">✓</div>
+        <h3>¡Inscripción recibida!</h3>
+        <p>Hemos recibido tus datos y el comprobante de pago para la modalidad <strong id="successModalidad"></strong>. En breve el equipo organizador verificará tu información y te contactará al correo indicado.</p>
+        <button type="button" class="btn btn-outline" id="modalSuccessClose">Cerrar</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ===== LIGHTBOX QR ===== -->
+<div class="qr-lightbox" id="qrLightbox" aria-hidden="true">
+  <button type="button" class="qr-lightbox-close" id="qrLightboxClose" aria-label="Cerrar">&times;</button>
+  <img src="assets/img/bancolombiaQR.jpeg" alt="Código QR Bre-B Bancolombia ampliado" id="qrLightboxImg" />
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="script.js?v=9"></script>
 <script src="bg.js?v=4"></script>
 <script src="fx.js?v=2"></script>
 </body>
