@@ -395,10 +395,12 @@
     window.addEventListener("scroll", upd, { passive: true });
   }
 
-  // Tasa de cambio referencial USD → COP (fuente: Investing.com, 24 jul 2026). Actualizar periódicamente.
-  const USD_TO_COP = 3219.24;
-  const fmtCOP = (usd) =>
-    new Intl.NumberFormat("es-CO", { style: "currency", currency: "COP", maximumFractionDigits: 0 }).format(usd * USD_TO_COP);
+  /* ---------- Códigos de descuento por institución ----------
+     Por ahora NO hay códigos: el campo del formulario es solo
+     informativo. Lo que escriba el asistente se guarda en la columna
+     "codigo_descuento" de la tabla inscripciones y el equipo
+     organizador lo valida a mano al revisar el pago. El total que ve
+     el asistente es siempre la tarifa completa. */
 
   /* ---------- Lightbox del QR de transferencia ---------- */
   function initQrLightbox() {
@@ -436,13 +438,15 @@
     const fileInput = $("#comprobanteInput", overlay);
     const fileName = $("#fileName", overlay);
     const psTotal = $("#psTotal", overlay);
+    const institucionField = $("#institucionField", overlay);
+    const institucionInput = $("input[name='institucion']", overlay);
+    const codigoInput = $("#codigoInput", overlay);
     const successModalidad = $("#successModalidad", overlay);
+    const successComprobante = $("#successComprobante", overlay);
+    const transferCop = $("#transferCop", overlay);
+    const transferUsd = $("#transferUsd", overlay);
     const transferAmount = $("#transferAmount", overlay);
-    const transferAmountCop = $("#transferAmountCop", overlay);
-    const transferAmountCopRow = $("#transferAmountCopRow", overlay);
-    const copyKeyBtn = $("#copyKeyBtn", overlay);
-    const copyKeyMsg = $("#copyKeyMsg", overlay);
-    const transferKey = $("#transferKey", overlay);
+    const transferAmountUsd = $("#transferAmountUsd", overlay);
 
     let precioBase = 0;
     let modalidadActual = "";
@@ -457,12 +461,20 @@
     function renderPrecio() {
       psTotal.textContent = fmt(precioBase);
       transferAmount.textContent = fmt(precioBase);
-      if (monedaActual === "COP") {
-        transferAmountCopRow.classList.add("hidden");
-      } else {
-        transferAmountCopRow.classList.remove("hidden");
-        transferAmountCop.textContent = fmtCOP(precioBase);
-      }
+      transferAmountUsd.textContent = fmt(precioBase);
+      modalidadResumen.textContent = `${modalidadActual} · ${categoriaActual} · ${fmt(precioBase)}`;
+    }
+
+    function renderCategoria() {
+      const esEstudiante = categoriaActual === "Estudiante";
+      institucionField.classList.toggle("hidden", !esEstudiante);
+      institucionInput.required = esEstudiante;
+      if (!esEstudiante) institucionInput.value = "";
+    }
+
+    function renderMoneda() {
+      transferCop.classList.toggle("hidden", monedaActual !== "COP");
+      transferUsd.classList.toggle("hidden", monedaActual !== "USD");
     }
 
     function resetForm() {
@@ -470,6 +482,8 @@
       form.classList.remove("hidden");
       successPanel.classList.add("hidden");
       fileName.textContent = "";
+      renderCategoria();
+      renderMoneda();
       renderPrecio();
     }
 
@@ -478,7 +492,6 @@
       categoriaActual = btn.dataset.categoria;
       monedaActual = btn.dataset.moneda || "USD";
       precioBase = parseFloat(btn.dataset.precio) || 0;
-      modalidadResumen.textContent = `${modalidadActual} · ${categoriaActual} · ${fmt(precioBase)}`;
       resetForm();
       overlay.classList.add("open");
       overlay.setAttribute("aria-hidden", "false");
@@ -511,23 +524,28 @@
       fileName.textContent = fileInput.files[0] ? fileInput.files[0].name : "";
     });
 
-    copyKeyBtn.addEventListener("click", async () => {
-      const key = transferKey.textContent.trim();
-      try {
-        await navigator.clipboard.writeText(key);
-      } catch {
-        const ta = document.createElement("textarea");
-        ta.value = key;
-        ta.style.position = "fixed";
-        ta.style.opacity = "0";
-        document.body.appendChild(ta);
-        ta.select();
-        document.execCommand("copy");
-        document.body.removeChild(ta);
-      }
-      copyKeyMsg.textContent = "¡Llave copiada!";
-      clearTimeout(copyKeyBtn._t);
-      copyKeyBtn._t = setTimeout(() => { copyKeyMsg.textContent = ""; }, 2500);
+    $$(".js-copy", overlay).forEach((btn) => {
+      const target = $(btn.dataset.copyTarget, overlay);
+      const msgEl = $(btn.dataset.copyMsg, overlay);
+      if (!target || !msgEl) return;
+      btn.addEventListener("click", async () => {
+        const value = target.textContent.trim();
+        try {
+          await navigator.clipboard.writeText(value);
+        } catch {
+          const ta = document.createElement("textarea");
+          ta.value = value;
+          ta.style.position = "fixed";
+          ta.style.opacity = "0";
+          document.body.appendChild(ta);
+          ta.select();
+          document.execCommand("copy");
+          document.body.removeChild(ta);
+        }
+        msgEl.textContent = "¡Copiado!";
+        clearTimeout(msgEl._t);
+        msgEl._t = setTimeout(() => { msgEl.textContent = ""; }, 2500);
+      });
     });
 
     const submitBtn = $("#submitBtn", overlay);
@@ -553,13 +571,16 @@
 
       try {
         const file = fileInput.files[0];
-        const ext = (file.name.split(".").pop() || "bin").toLowerCase();
-        const path = `${Date.now()}-${Math.random().toString(36).slice(2, 8)}.${ext}`;
+        let path = null;
 
-        const { error: uploadError } = await supabaseClient.storage
-          .from("comprobantes")
-          .upload(path, file);
-        if (uploadError) throw uploadError;
+        if (file) {
+          const ext = (file.name.split(".").pop() || "bin").toLowerCase();
+          path = `${Date.now()}-${Math.random().toString(36).slice(2, 8)}.${ext}`;
+          const { error: uploadError } = await supabaseClient.storage
+            .from("comprobantes")
+            .upload(path, file);
+          if (uploadError) throw uploadError;
+        }
 
         const { error: insertError } = await supabaseClient.from("inscripciones").insert({
           nombre: form.nombre.value.trim(),
@@ -567,16 +588,21 @@
           email: form.email.value.trim(),
           telefono: form.telefono.value.trim(),
           pais: form.pais.value.trim(),
+          institucion: categoriaActual === "Estudiante" ? institucionInput.value.trim() : null,
           modalidad: modalidadActual,
           categoria: categoriaActual,
           moneda: monedaActual,
           precio_base: precioBase,
+          codigo_descuento: codigoInput.value.trim() || null,
           total: precioBase,
           comprobante_path: path,
         });
         if (insertError) throw insertError;
 
         successModalidad.textContent = modalidadResumen.textContent;
+        successComprobante.textContent = path
+          ? "Recibimos también tu comprobante de pago. En breve el equipo organizador verificará tu información y te contactará al correo indicado."
+          : "Recuerda enviar tu comprobante de pago a ciderechoprocesal@gmail.com o al WhatsApp +57 301 430 3874: tu cupo queda confirmado solo cuando validemos el pago.";
         form.classList.add("hidden");
         successPanel.classList.remove("hidden");
       } catch (err) {

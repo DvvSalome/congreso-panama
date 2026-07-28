@@ -11,7 +11,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="styles.css?v=14" />
+<link rel="stylesheet" href="styles.css?v=16" />
 </head>
 <body>
 <canvas id="bg-fx" aria-hidden="true"></canvas>
@@ -389,36 +389,66 @@
             <span>País *</span>
             <input type="text" name="pais" required autocomplete="country-name" />
           </label>
+          <label class="field field-full hidden" id="institucionField">
+            <span>Institución educativa *</span>
+            <input type="text" name="institucion" autocomplete="organization" />
+            <span class="field-hint">Universidad o institución donde cursas tus estudios. La tarifa de estudiante está sujeta a verificación.</span>
+          </label>
+          <label class="field field-full">
+            <span>Código de descuento por institución (opcional)</span>
+            <input type="text" name="codigo_descuento" id="codigoInput" autocomplete="off" spellcheck="false" />
+            <span class="field-hint">Si tu institución te entregó un código, escríbelo aquí. El equipo organizador lo validará al revisar tu pago.</span>
+          </label>
         </div>
 
         <div class="price-summary" id="priceSummary">
           <div class="ps-row ps-total"><span>Total a pagar</span><span id="psTotal">$0 USD</span></div>
         </div>
 
-        <div class="transfer-box">
-          <span class="transfer-step">Paso 1 · Realiza tu transferencia</span>
+        <div class="transfer-box" id="transferCop">
+          <span class="transfer-step">Paso 1 · Realiza tu transferencia en Colombia</span>
           <div class="transfer-body">
             <button type="button" class="transfer-qr-btn" id="qrZoomBtn" aria-label="Ampliar código QR para escanear">
               <img src="assets/img/bancolombiaQR.jpeg" alt="Código QR Bre-B Bancolombia para transferencia" class="transfer-qr" />
               <span class="transfer-qr-zoom" aria-hidden="true">⤢</span>
             </button>
             <div class="transfer-info">
-              <p class="transfer-amount">Transfiere <strong id="transferAmount">$0 USD</strong></p>
-              <p class="transfer-amount-cop" id="transferAmountCopRow">≈ <strong id="transferAmountCop">$0 COP</strong> <span class="transfer-rate-note">(tasa referencial)</span></p>
+              <p class="transfer-amount">Transfiere <strong id="transferAmount">$0 COP</strong></p>
               <p class="transfer-hint">Toca el QR para ampliarlo y escanéalo desde tu app bancaria (Bre-B), o usa la llave:</p>
               <div class="transfer-key-row">
                 <code class="transfer-key" id="transferKey">@morales6773</code>
-                <button type="button" class="btn btn-outline btn-sm" id="copyKeyBtn">Copiar</button>
+                <button type="button" class="btn btn-outline btn-sm js-copy" data-copy-target="#transferKey" data-copy-msg="#copyKeyMsg">Copiar</button>
               </div>
               <span class="transfer-copy-msg" id="copyKeyMsg" aria-live="polite"></span>
             </div>
           </div>
         </div>
 
+        <div class="transfer-box hidden" id="transferUsd">
+          <span class="transfer-step">Paso 1 · Realiza tu transferencia internacional</span>
+          <p class="transfer-amount">Transfiere <strong id="transferAmountUsd">$0 USD</strong></p>
+          <p class="transfer-hint">Transferencia en dólares a la siguiente cuenta:</p>
+          <dl class="bank-list">
+            <div class="bank-row"><dt>Banco</dt><dd>Bank of America</dd></div>
+            <div class="bank-row"><dt>Titular</dt><dd>María Soledad Morales Torrejano</dd></div>
+            <div class="bank-row">
+              <dt>No. de cuenta</dt>
+              <dd><code id="bankAccount">898089436328</code>
+                <button type="button" class="btn btn-outline btn-sm js-copy" data-copy-target="#bankAccount" data-copy-msg="#bankCopyMsg">Copiar</button></dd>
+            </div>
+            <div class="bank-row">
+              <dt>ABA / Routing Number</dt>
+              <dd><code id="bankRouting">02609593</code>
+                <button type="button" class="btn btn-outline btn-sm js-copy" data-copy-target="#bankRouting" data-copy-msg="#bankCopyMsg">Copiar</button></dd>
+            </div>
+          </dl>
+          <span class="transfer-copy-msg" id="bankCopyMsg" aria-live="polite"></span>
+        </div>
+
         <label class="field field-full">
-          <span>Paso 2 · Sube tu comprobante de transferencia *</span>
-          <input type="file" name="comprobante" id="comprobanteInput" accept="image/*,application/pdf" required />
-          <span class="field-hint">Formatos permitidos: JPG, PNG o PDF.</span>
+          <span>Paso 2 · Sube tu comprobante de transferencia</span>
+          <input type="file" name="comprobante" id="comprobanteInput" accept="image/*,application/pdf" />
+          <span class="field-hint">Opcional. Si aún no has pagado, puedes enviarlo después a ciderechoprocesal@gmail.com o al WhatsApp +57 301 430 3874: tu cupo se confirma cuando validemos el pago. Formatos permitidos: JPG, PNG o PDF.</span>
           <span class="file-name" id="fileName"></span>
         </label>
 
@@ -431,7 +461,7 @@
       <div class="modal-success hidden" id="modalSuccess">
         <div class="success-icon">✓</div>
         <h3>¡Inscripción recibida!</h3>
-        <p>Hemos recibido tus datos y el comprobante de pago para la modalidad <strong id="successModalidad"></strong>. En breve el equipo organizador verificará tu información y te contactará al correo indicado.</p>
+        <p>Hemos recibido tus datos para la modalidad <strong id="successModalidad"></strong>. <span id="successComprobante"></span></p>
         <button type="button" class="btn btn-outline" id="modalSuccessClose">Cerrar</button>
       </div>
 
@@ -446,7 +476,7 @@
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
-<script src="script.js?v=9"></script>
+<script src="script.js?v=11"></script>
 <script src="bg.js?v=4"></script>
 <script src="fx.js?v=2"></script>
 </body>

@@ -321,6 +321,15 @@ h1,h2,h3,.h2{font-family:"Libre Baskerville",Georgia,serif;font-weight:700;line-
 .price-summary{background:#fff;border:1px solid rgba(29,37,73,.1);border-radius:var(--radius-sm);padding:18px 20px;margin-bottom:20px;display:flex;flex-direction:column;gap:8px}
 .ps-row{display:flex;justify-content:space-between;font-size:.92rem;color:var(--ink-soft)}
 .ps-total{font-size:1.1rem;font-weight:800;color:var(--navy);padding-top:8px;border-top:1px dashed rgba(29,37,73,.16)}
+.bank-list{display:flex;flex-direction:column;gap:10px;margin-top:4px}
+.bank-row{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;padding-bottom:10px;border-bottom:1px dashed rgba(29,37,73,.12)}
+.bank-row:last-child{border-bottom:0;padding-bottom:0}
+.bank-row dt{font-size:.78rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--ink-soft)}
+.bank-row dd{display:flex;align-items:center;gap:10px;flex-wrap:wrap;font-size:.95rem;font-weight:600;color:var(--navy);text-align:right}
+.bank-row dd code{
+  font-family:"Montserrat",sans-serif;font-weight:700;font-size:.95rem;color:var(--navy);
+  background:rgba(232,180,71,.14);padding:.4em .8em;border-radius:8px;letter-spacing:.02em;
+}
 
 .transfer-box{background:#fff;border:1.5px solid var(--line);border-radius:var(--radius-sm);padding:18px 20px;margin-bottom:20px}
 .transfer-step{display:inline-block;font-size:.72rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--gold-2);margin-bottom:14px}
@@ -354,9 +363,6 @@ h1,h2,h3,.h2{font-family:"Libre Baskerville",Georgia,serif;font-weight:700;line-
 .transfer-info{flex:1;min-width:0}
 .transfer-amount{font-size:.98rem;color:var(--ink);margin-bottom:2px}
 .transfer-amount strong{color:var(--navy);font-size:1.05rem}
-.transfer-amount-cop{font-size:.86rem;color:var(--ink-soft);margin-bottom:8px}
-.transfer-amount-cop strong{color:var(--gold-2);font-weight:700}
-.transfer-rate-note{font-size:.76rem;opacity:.75}
 .transfer-hint{font-size:.82rem;color:var(--ink-soft);margin-bottom:8px}
 .transfer-key-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
 .transfer-key{font-family:"Montserrat",sans-serif;font-weight:700;font-size:.95rem;color:var(--navy);background:rgba(232,180,71,.14);padding:.4em .8em;border-radius:8px;letter-spacing:.02em}
