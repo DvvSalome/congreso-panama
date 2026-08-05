@@ -4,7 +4,7 @@ Sitio web de una sola página (one-page) reconstruido a partir del sitio origina
 
 - **Evento:** 25 y 26 de septiembre de 2026
 - **Sede:** Centro de Convenciones ATLAPA, Ciudad de Panamá
-- **Organizan:** MERCOSUR Global Panamá · María Morales, Henao Abogados & Asociados
+- **Organizan:** Cámara de Comercio Panamá–Mercosur · María Morales, Henao Abogados & Asociados
 
 ## Estructura
 
